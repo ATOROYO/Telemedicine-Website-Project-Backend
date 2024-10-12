@@ -26,3 +26,8 @@ app.use('/admin', adminRoutes);
 app.get('/', (req, res) => {
   res.send('Welcome to Rhema Hospital Telemedicine Service');
 });
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
