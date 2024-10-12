@@ -8,3 +8,16 @@ exports.getAllPatients = (req, res) => {
     res.json(results);
   });
 };
+
+// Adding new patient to the database
+exports.addPatient = (req, res) => {
+  const { first_name, last_name, email, password } = req.body;
+  db.query(
+    'INSERT INTO users SET ?',
+    { first_name, last_name, email, password, role: 'patient' },
+    (err, result) => {
+      if (err) throw err;
+      res.send('Patient added');
+    }
+  );
+};
