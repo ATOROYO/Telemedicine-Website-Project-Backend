@@ -21,3 +21,16 @@ exports.addDoctor = (req, res) => {
     }
   );
 };
+
+// Geeting doctor from the database
+exports.getDoctorById = (req, res) => {
+  const id = req.params.id;
+  db.query(
+    'SELECT * FROM users WHERE user_id = ? AND role = "doctor"',
+    [id],
+    (err, result) => {
+      if (err) throw err;
+      res.json(result);
+    }
+  );
+};
