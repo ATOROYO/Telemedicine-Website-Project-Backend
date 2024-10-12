@@ -21,3 +21,16 @@ exports.addPatient = (req, res) => {
     }
   );
 };
+
+// Geeting existing user fromthe database
+exports.getPatientById = (req, res) => {
+  const id = req.params.id;
+  db.query(
+    'SELECT * FROM users WHERE user_id = ? AND role = "patient"',
+    [id],
+    (err, result) => {
+      if (err) throw err;
+      res.json(result);
+    }
+  );
+};
