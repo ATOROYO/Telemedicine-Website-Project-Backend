@@ -21,3 +21,16 @@ exports.bookAppointment = (req, res) => {
     }
   );
 };
+
+// Getting an appointment from the database
+exports.getAppointmentById = (req, res) => {
+  const id = req.params.id;
+  db.query(
+    'SELECT * FROM appointments WHERE appointment_id = ?',
+    [id],
+    (err, result) => {
+      if (err) throw err;
+      res.json(result);
+    }
+  );
+};
