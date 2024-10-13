@@ -5,6 +5,9 @@ const router = express.Router();
 const patientController = require('../controllers/patientController');
 const { ensureAuthenticated } = require('../middlewares/auth');
 
+// View profile
+router.get('/profile', ensureAuthenticated, patientController.viewProfile);
+
 // Patient Routes
 router.get('/', patientController.getAllPatients);
 router.post('/add', patientController.addPatient);
