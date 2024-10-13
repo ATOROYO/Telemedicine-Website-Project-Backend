@@ -17,6 +17,21 @@ router.post('/doctors', ensureAdmin, (req, res) => {
   );
 });
 
+// Update doctor profile/schedule
+router.put('/doctors/:id', ensureAdmin, (req, res) => {
+  const doctorId = req.params.id;
+  const { first_name, last_name, specialization, schedule } = req.body;
+
+  db.query(
+    'UPDATE doctors SET first_name = ?, last_name = ?, specialization = ?, schedule = ? WHERE id = ?',
+    [first_name, last_name, specialization, schedule, doctorId],
+    (err, result) => {
+      if (err) throw err;
+      res.json({ message: 'Doctor profile updated successfully' });
+    }
+  );
+});
+
 // Admin Routes
 router.get('/', adminController.getAdminDashboard);
 router.post('/addDoctor', adminController.addDoctor);
