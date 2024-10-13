@@ -32,7 +32,7 @@ router.put('/doctors/:id', ensureAdmin, (req, res) => {
   );
 });
 
-// Deactivate doctor profile
+// Deactivate/Delete doctor profile
 router.delete('/doctors/:id', ensureAdmin, (req, res) => {
   const doctorId = req.params.id;
 
