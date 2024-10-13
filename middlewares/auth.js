@@ -7,4 +7,9 @@ exports.ensureAuthenticated = (req, res, next) => {
   }
 };
 
-export default isAdmin;
+// After a successful login
+req.session.user = {
+  id: user.id,
+  email: user.email,
+  role: user.role, // This should be 'admin' or 'patient'
+};
