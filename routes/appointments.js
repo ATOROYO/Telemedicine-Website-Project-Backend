@@ -46,7 +46,8 @@ router.get('/doctor/:id', ensureAuthenticated, (req, res) => {
     }
   );
 });
-// Reschedule or cancel an appointment
+
+// Reschedule an appointment
 router.put('/:id', ensureAuthenticated, (req, res) => {
   const appointmentId = req.params.id;
   const { appointmentDate, time } = req.body;
@@ -57,6 +58,20 @@ router.put('/:id', ensureAuthenticated, (req, res) => {
     (err, result) => {
       if (err) throw err;
       res.json({ message: 'Appointment rescheduled successfully' });
+    }
+  );
+});
+
+// Cancel an appointment
+router.delete('/:id', ensureAuthenticated, (req, res) => {
+  const appointmentId = req.params.id;
+
+  db.query(
+    'UPDATE appointments SET status = "canceled" WHERE id = ?',
+    [appointmentId],
+    (err, result) => {
+      if (err) throw err;
+      res.json({ message: 'Appointment canceled successfully' });
     }
   );
 });
