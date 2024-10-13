@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const db = require('./config/db');
+const session = require('express-session');
 
 // Routes
 const patientRoutes = require('./routes/patients');
