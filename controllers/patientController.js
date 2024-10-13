@@ -94,6 +94,26 @@ exports.viewProfile = (req, res) => {
   );
 };
 
+// Update patient profile
+exports.updateProfile = (req, res) => {
+  const patientId = req.session.patient.id;
+  const { first_name, last_name } = req.body;
+
+  db.query(
+    'UPDATE users SET first_name = ?, last_name = ? WHERE user_id = ?',
+    [first_name, last_name, patientId],
+    (err, result) => {
+      if (err) throw err;
+
+      if (result.affectedRows > 0) {
+        res.json({ message: 'Profile updated successfully' });
+      } else {
+        res.status(404).json({ message: 'Profile not found' });
+      }
+    }
+  );
+};
+
 // Getting all the patients
 exports.getAllPatients = (req, res) => {
   db.query('SELECT * FROM users WHERE role = "patient"', (err, results) => {
