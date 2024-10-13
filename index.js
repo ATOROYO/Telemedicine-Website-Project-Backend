@@ -17,6 +17,16 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Session setup
+app.use(
+  session({
+    secret: 'telemedicine_secret', // Replace with a strong secret
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 * 30 }, // Session expires after 30 minutes
+  })
+);
+
 // Routes
 app.use('/patients', patientRoutes);
 app.use('/doctors', doctorRoutes);
