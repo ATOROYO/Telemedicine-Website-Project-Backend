@@ -33,6 +33,20 @@ router.get('/my-appointments', ensureAuthenticated, (req, res) => {
   );
 });
 
+// Get appointments for a specific doctor
+router.get('/doctor/:id', ensureAuthenticated, (req, res) => {
+  const doctorId = req.params.id;
+
+  db.query(
+    'SELECT * FROM appointments WHERE doctor_id = ?',
+    [doctorId],
+    (err, results) => {
+      if (err) throw err;
+      res.json(results);
+    }
+  );
+});
+
 // Appointment Routes (Protected)
 router.get('/', ensureAuthenticated, appointmentController.getAllAppointments);
 router.post(
