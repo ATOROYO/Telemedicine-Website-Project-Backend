@@ -75,6 +75,25 @@ exports.loginPatient = (req, res) => {
   );
 };
 
+// View patient profile
+exports.viewProfile = (req, res) => {
+  const patientId = req.session.patient.id;
+
+  db.query(
+    'SELECT first_name, last_name, email FROM users WHERE user_id = ?',
+    [patientId],
+    (err, result) => {
+      if (err) throw err;
+
+      if (result.length > 0) {
+        res.json(result[0]);
+      } else {
+        res.status(404).json({ message: 'Profile not found' });
+      }
+    }
+  );
+};
+
 // Getting all the patients
 exports.getAllPatients = (req, res) => {
   db.query('SELECT * FROM users WHERE role = "patient"', (err, results) => {
