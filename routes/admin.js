@@ -32,6 +32,16 @@ router.put('/doctors/:id', ensureAdmin, (req, res) => {
   );
 });
 
+// Deactivate doctor profile
+router.delete('/doctors/:id', ensureAdmin, (req, res) => {
+  const doctorId = req.params.id;
+
+  db.query('DELETE FROM doctors WHERE id = ?', [doctorId], (err, result) => {
+    if (err) throw err;
+    res.json({ message: 'Doctor profile deleted successfully' });
+  });
+});
+
 // Admin Routes
 router.get('/', adminController.getAdminDashboard);
 router.post('/addDoctor', adminController.addDoctor);
