@@ -12,4 +12,7 @@ router.get('/:id', patientController.getPatientById);
 // Register route
 router.post('/register', patientController.registerPatient);
 
+// Login route
+router.post('/login', patientController.loginPatient);
+
 module.exports = router;
