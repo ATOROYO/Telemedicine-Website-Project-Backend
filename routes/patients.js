@@ -22,4 +22,7 @@ router.post('/register', patientController.registerPatient);
 // Login route
 router.post('/login', patientController.loginPatient);
 
+// Logout route
+router.post('/logout', ensureAuthenticated, patientController.logout);
+
 module.exports = router;
