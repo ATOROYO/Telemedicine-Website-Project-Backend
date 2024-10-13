@@ -114,6 +114,14 @@ exports.updateProfile = (req, res) => {
   );
 };
 
+// Logout patient
+exports.logout = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) throw err;
+    res.json({ message: 'Logged out successfully' });
+  });
+};
+
 // Getting all the patients
 exports.getAllPatients = (req, res) => {
   db.query('SELECT * FROM users WHERE role = "patient"', (err, results) => {
