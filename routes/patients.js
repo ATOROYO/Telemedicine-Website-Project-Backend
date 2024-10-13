@@ -8,6 +8,9 @@ const { ensureAuthenticated } = require('../middlewares/auth');
 // View profile
 router.get('/profile', ensureAuthenticated, patientController.viewProfile);
 
+// Update profile
+router.put('/profile', ensureAuthenticated, patientController.updateProfile);
+
 // Patient Routes
 router.get('/', patientController.getAllPatients);
 router.post('/add', patientController.addPatient);
