@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
+const { ensureAdmin } = require('../middleware/auth');
 
 // Add new doctor
 router.post('/doctors', ensureAdmin, (req, res) => {
