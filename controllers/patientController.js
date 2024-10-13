@@ -39,6 +39,42 @@ exports.registerPatient = async (req, res) => {
   );
 };
 
+// Login patient
+exports.loginPatient = (req, res) => {
+  const { email, password } = req.body;
+
+  db.query(
+    'SELECT * FROM users WHERE email = ? AND role = "patient"',
+    [email],
+    async (err, results) => {
+      if (err) throw err;
+
+      if (results.length === 0) {
+        return res.status(400).json({ message: 'Invalid email or password' });
+      }
+
+      const patient = results[0];
+
+      // Compare the entered password with the stored hashed password
+      const isMatch = await bcrypt.compare(password, patient.password);
+
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Invalid email or password' });
+      }
+
+      // Store user session
+      req.session.patient = {
+        id: patient.user_id,
+        first_name: patient.first_name,
+        last_name: patient.last_name,
+        email: patient.email,
+      };
+
+      res.json({ message: 'Login successful', patient: req.session.patient });
+    }
+  );
+};
+
 // Getting all the patients
 exports.getAllPatients = (req, res) => {
   db.query('SELECT * FROM users WHERE role = "patient"', (err, results) => {
