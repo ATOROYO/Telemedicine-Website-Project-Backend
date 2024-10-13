@@ -19,6 +19,20 @@ router.post('/', ensureAuthenticated, (req, res) => {
   );
 });
 
+// Get appointments for logged-in patient
+router.get('/my-appointments', ensureAuthenticated, (req, res) => {
+  const patientId = req.session.patient.id;
+
+  db.query(
+    'SELECT * FROM appointments WHERE patient_id = ?',
+    [patientId],
+    (err, results) => {
+      if (err) throw err;
+      res.json(results);
+    }
+  );
+});
+
 // Appointment Routes (Protected)
 router.get('/', ensureAuthenticated, appointmentController.getAllAppointments);
 router.post(
