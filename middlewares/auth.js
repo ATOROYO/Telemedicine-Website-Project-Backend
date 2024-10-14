@@ -30,23 +30,28 @@
 
 // module.exports = { ensureAdmin };
 
-const {
-  ensureAuthenticated,
-  ensureAdmin,
-  ensurePatient,
-} = require('./middlewares/auth');
+// Ensure the user is authenticated
+function ensureAuthenticated(req, res, next) {
+  if (req.session && req.session.user) {
+    return next();
+  }
+  return res.status(401).json({ message: 'Unauthorized' });
+}
 
-// Example: Admin route
-app.get('/admin-dashboard', ensureAdmin, (req, res) => {
-  res.send('Welcome to the Admin Dashboard!');
-});
+// Ensure the user is an admin
+function ensureAdmin(req, res, next) {
+  if (req.session.user && req.session.user.role === 'admin') {
+    return next();
+  }
+  return res.status(403).json({ message: 'Forbidden: Admins only' });
+}
 
-// Example: Patient route
-app.get('/patient-dashboard', ensurePatient, (req, res) => {
-  res.send('Welcome to the Patient Dashboard!');
-});
+// Ensure the user is a patient
+function ensurePatient(req, res, next) {
+  if (req.session.user && req.session.user.role === 'patient') {
+    return next();
+  }
+  return res.status(403).json({ message: 'Forbidden: Patients only' });
+}
 
-// Example: General protected route
-app.get('/protected', ensureAuthenticated, (req, res) => {
-  res.send('You are authenticated and can access this protected route.');
-});
+module.exports = { ensureAuthenticated, ensureAdmin, ensurePatient };
