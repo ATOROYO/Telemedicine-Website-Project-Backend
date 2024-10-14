@@ -39,8 +39,8 @@ app.use('/doctors', doctorRoutes);
 app.use('/appointments', appointmentRoutes);
 app.use('/admin', adminRoutes);
 
-app.get('/', (req, res) => {
-  res.send('Welcome to Rhema Hospital Telemedicine Service');
+app.get('/patients', ensurePatient, (req, res) => {
+  res.send('Patient Dashboard');
 });
 
 // Start the server
