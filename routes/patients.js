@@ -3,7 +3,11 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const patientController = require('../controllers/patientController');
-const { ensureAuthenticated } = require('../middlewares/auth');
+const {
+  ensureAuthenticated,
+  ensureAdmin,
+  ensurePatient,
+} = require('../middlewares/auth');
 
 // View profile
 router.get('/profile', ensureAuthenticated, patientController.viewProfile);
