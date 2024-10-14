@@ -8,7 +8,7 @@ const {
   ensureAuthenticated,
   ensureAdmin,
   ensurePatient,
-} = require('../middlewares/auth');
+} = require('./middlewares/auth');
 
 // Routes
 const patientRoutes = require('./routes/patients');
