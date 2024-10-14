@@ -30,45 +30,23 @@
 
 // module.exports = { ensureAdmin };
 
-const express = require('express');
-const bcrypt = require('bcrypt');
-const User = require('../models/User'); // Assuming you have a User model
-const router = express.Router();
+const {
+  ensureAuthenticated,
+  ensureAdmin,
+  ensurePatient,
+} = require('./middlewares/auth');
 
-// Login route handler
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    // Find the user by email
-    const user = await User.findOne({ email });
-
-    // If user is not found
-    if (!user) {
-      return res.status(400).json({ message: 'User not found' });
-    }
-
-    // Check if password matches
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
-    }
-
-    // Set session after successful login
-    req.session.user = {
-      id: user._id, // MongoDB ID or user ID
-      email: user.email, // User email
-      role: user.role, // 'admin' or 'patient'
-    };
-
-    // Send success response
-    res.json({ message: 'Login successful', user: req.session.user });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
-  }
+// Example: Admin route
+app.get('/admin-dashboard', ensureAdmin, (req, res) => {
+  res.send('Welcome to the Admin Dashboard!');
 });
 
-// Export the router
-module.exports = router;
+// Example: Patient route
+app.get('/patient-dashboard', ensurePatient, (req, res) => {
+  res.send('Welcome to the Patient Dashboard!');
+});
+
+// Example: General protected route
+app.get('/protected', ensureAuthenticated, (req, res) => {
+  res.send('You are authenticated and can access this protected route.');
+});
