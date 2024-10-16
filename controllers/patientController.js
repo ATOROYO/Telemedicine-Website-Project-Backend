@@ -28,9 +28,10 @@ exports.registerPatient = async (req, res) => {
     );
 
     // Send success response
-    res
-      .status(200)
-      .json({ success: true, message: 'Patient registered successfully' });
+    res.status(200).json({
+      success: true,
+      message: 'Registration successful',
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -73,12 +74,10 @@ exports.loginPatient = async (req, res) => {
     res.status(200).json({ success: true, message: 'Login successful' });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: 'Server error. Please try again later',
-      });
+    res.status(500).json({
+      success: false,
+      message: 'Server error. Please try again later',
+    });
   }
 };
 
