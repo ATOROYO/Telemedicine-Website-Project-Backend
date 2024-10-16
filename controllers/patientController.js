@@ -2,41 +2,44 @@
 const db = require('../config/db');
 const bcrypt = require('bcrypt');
 
-// Register a new patient
+// Patient Registration
 exports.registerPatient = async (req, res) => {
-  const { first_name, last_name, email, password } = req.body;
+  const { name, email, password } = req.body;
 
-  // Check if the email is already registered
-  db.query(
-    'SELECT * FROM users WHERE email = ? AND role = "patient"',
-    [email],
-    async (err, results) => {
-      if (err) throw err;
-
-      if (results.length > 0) {
-        return res.status(400).json({ message: 'Email is already registered' });
-      } else {
-        // Hash the password before storing it
-        const hashedPassword = await bcrypt.hash(password, 10);
-        db.query(
-          'INSERT INTO users SET ?',
-          {
-            first_name,
-            last_name,
-            email,
-            password: hashedPassword,
-            role: 'patient',
-          },
-          (err, result) => {
-            if (err) throw err;
-            res
-              .status(201)
-              .json({ message: 'Patient registered successfully' });
-          }
-        );
-      }
+  try {
+    // Check if email already exists
+    const existingPatient = await db.query(
+      'SELECT * FROM patients WHERE email = ?',
+      [email]
+    );
+    if (existingPatient.length > 0) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'Email already registered' });
     }
-  );
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Save the patient to the database
+    await db.query(
+      'INSERT INTO patients (name, email, password) VALUES (?, ?, ?)',
+      [name, email, hashedPassword]
+    );
+
+    // Send success response
+    res
+      .status(200)
+      .json({ success: true, message: 'Patient registered successfully' });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: 'Server error. Please try again later',
+      });
+  }
 };
 
 // Login patient
