@@ -13,5 +13,39 @@
       <button type="submit">Register</button>
       <div id="feedback"></div>
     </form>
+
+    <script>
+      const form = document.getElementById('registerForm');
+      const feedback = document.getElementById('feedback');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent form from reloading the page
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Send form data using fetch
+        try {
+          const response = await fetch('/patients/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, password }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            feedback.innerHTML = `<span style="color: green">${data.message}</span>`;
+          } else {
+            feedback.innerHTML = `<span style="color: red">${data.message}</span>`;
+          }
+        } catch (error) {
+          feedback.innerHTML = `<span style="color: red">Error: ${error.message}</span>`;
+        }
+      });
+    </script>
   </body>
 </html>
