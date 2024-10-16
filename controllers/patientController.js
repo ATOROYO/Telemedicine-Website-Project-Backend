@@ -8,7 +8,7 @@ exports.registerPatient = async (req, res) => {
 
   try {
     // Check if email already exists
-    const existingPatient = await db.query(
+    const existingPatient = await db.execute(
       'SELECT * FROM patients WHERE email = ?',
       [email]
     );
@@ -28,7 +28,7 @@ exports.registerPatient = async (req, res) => {
     );
 
     // Send success response
-    res.status(200).json({
+    res.status(201).json({
       success: true,
       message: 'Registration successful',
     });
