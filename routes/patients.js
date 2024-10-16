@@ -26,7 +26,15 @@ router.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Check if the email already exists
+    // Check the incoming data
+    console.log(req.body);
+
+    if (!name || !email || !password) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'All fields are required' });
+    }
+
     const [existingUser] = await db.execute(
       'SELECT * FROM patients WHERE email = ?',
       [email]
@@ -37,15 +45,14 @@ router.post('/register', async (req, res) => {
         .json({ success: false, message: 'Email already exists' });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Insert into the database
-    await db.execute(
+    const [result] = await db.execute(
       'INSERT INTO patients (name, email, password) VALUES (?, ?, ?)',
       [name, email, hashedPassword]
     );
 
+    console.log('Insert result: ', result); // Log the result of the insert query
     return res
       .status(201)
       .json({ success: true, message: 'Registration successful' });
