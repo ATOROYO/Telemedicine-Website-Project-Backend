@@ -43,7 +43,8 @@ app.use('/appointments', appointmentRoutes);
 app.use('/admin', adminRoutes);
 
 app.get('/patients', ensurePatient, (req, res) => {
-  res.send('Patient Dashboard');
+  // res.send('Patient Dashboard');
+  res.sendFile();
 });
 
 // Start the server
