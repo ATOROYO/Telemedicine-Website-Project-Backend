@@ -23,4 +23,6 @@ const pool = mysql.createPool({
   }
 })();
 
+console.log(pool);
+
 module.exports = pool;
