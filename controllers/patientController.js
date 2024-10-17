@@ -129,11 +129,18 @@ exports.logout = (req, res) => {
 };
 
 // Getting all the patients
-exports.getAllPatients = (req, res) => {
-  db.execute('SELECT * FROM users WHERE role = "patient"', (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
+exports.getAllPatients = async (req, res) => {
+  try {
+    // Use async/await with promise-based MySQL2
+    const [patients] = await db.execute('SELECT * FROM patients');
+
+    res.json({ success: true, patients });
+  } catch (error) {
+    console.error('Error fetching patients:', error);
+    res
+      .status(500)
+      .json({ success: false, message: 'Error fetching patients' });
+  }
 };
 
 // Adding new patient to the database
