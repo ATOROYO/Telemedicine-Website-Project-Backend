@@ -4,40 +4,22 @@ const bcrypt = require('bcrypt');
 
 // Patient Registration
 exports.registerPatient = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { firstName, lastName, email, password, phone } = req.body;
+
+  // Hash password
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    // Check if email already exists
-    const existingPatient = await db.execute(
-      'SELECT * FROM patients WHERE email = ?',
-      [email]
-    );
-    if (existingPatient.length > 0) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'Email already registered' });
-    }
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Save the patient to the database
-    await db.execute(
-      'INSERT INTO patients (name, email, password) VALUES (?, ?, ?)',
-      [name, email, hashedPassword]
+    // Insert the user data into the patients table
+    const [result] = await pool.execute(
+      `INSERT INTO patients (first_name, last_name, email, password, phone) VALUES (?, ?, ?, ?, ?)`,
+      [firstName, lastName, email, hashedPassword, phone]
     );
 
-    // Send success response
-    res.status(201).json({
-      success: true,
-      message: 'Registration successful',
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      message: 'Server error. Please try again later',
-    });
+    res.status(201).json({ message: 'User registered successfully!' });
+  } catch (err) {
+    console.error('Error registering patient:', err);
+    res.status(500).json({ message: 'Error registering user', error: err });
   }
 };
 
