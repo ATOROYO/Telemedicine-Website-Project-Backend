@@ -155,26 +155,26 @@
       //     });
 
       // Frontend form submission code (make sure it's sending the correct data)
-      const registerPatient = async () => {
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+      // const registerPatient = async () => {
+      //   const name = document.getElementById('name').value;
+      //   const email = document.getElementById('email').value;
+      //   const password = document.getElementById('password').value;
 
-        const response = await fetch('/patients/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ name, email, password }),
-        });
+      //   const response = await fetch('/patients/register', {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //     body: JSON.stringify({ name, email, password }),
+      //   });
 
-        const result = await response.json();
-        if (result.success) {
-          alert('Registration successful!');
-        } else {
-          alert('Registration failed: ' + result.message);
-        }
-      };
+      //   const result = await response.json();
+      //   if (result.success) {
+      //     alert('Registration successful!');
+      //   } else {
+      //     alert('Registration failed: ' + result.message);
+      //   }
+      // };
     </script>
   </body>
 </html>
