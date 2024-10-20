@@ -176,5 +176,49 @@
       //   }
       // };
     </script>
+
+    <script>
+      document
+        .getElementById('registerForm')
+        .addEventListener('submit', async function (e) {
+          e.preventDefault(); // Prevent default form submission
+
+          // Get form data
+          const formData = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            phone: document.getElementById('phone').value,
+          };
+
+          try {
+            // Send POST request to register the patient
+            const response = await fetch('/patients/register', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+
+            // Handle success or error feedback
+            if (response.ok) {
+              document.getElementById('feedbackMessage').innerText =
+                'Registration successful!';
+              document.getElementById('feedbackMessage').style.color = 'green';
+              document.getElementById('registerForm').reset(); // Reset the form
+            } else {
+              throw new Error(result.message || 'Registration failed');
+            }
+          } catch (error) {
+            document.getElementById('feedbackMessage').innerText =
+              error.message;
+            document.getElementById('feedbackMessage').style.color = 'red';
+          }
+        });
+    </script>
   </body>
 </html>
