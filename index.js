@@ -22,7 +22,6 @@ const port = process.env.PORT || 3000;
 
 // This ensures that incoming requests with JSON bodies are parsed
 app.use(express.json());
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
