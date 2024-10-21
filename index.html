@@ -160,13 +160,13 @@
       //   const email = document.getElementById('email').value;
       //   const password = document.getElementById('password').value;
 
-      //   const response = await fetch('/patients/register', {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //     body: JSON.stringify({ name, email, password }),
-      //   });
+        const response = await fetch('/patients/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, email, password }),
+        });
       // };
     </script>
 
