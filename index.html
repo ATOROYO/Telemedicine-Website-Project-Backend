@@ -93,14 +93,14 @@
 
       //       const data = await response.json();
 
-      //       if (data.success) {
-      //         feedback.innerHTML = `<span style="color: green">${data.message}</span>`;
-      //       } else {
-      //         feedback.innerHTML = `<span style="color: red">${data.message}</span>`;
-      //       }
-      //     } catch (error) {
-      //       feedback.innerHTML = `<span style="color: red">Error: ${error.message}</span>`;
-      //     }
+            if (data.success) {
+              feedback.innerHTML = `<span style="color: green">${data.message}</span>`;
+            } else {
+              feedback.innerHTML = `<span style="color: red">${data.message}</span>`;
+            }
+          } catch (error) {
+            feedback.innerHTML = `<span style="color: red">Error: ${error.message}</span>`;
+          }
       //   });
     </script>
 
@@ -112,15 +112,15 @@
           event.preventDefault(); // Prevent the form from submitting the traditional way
 
           // Get values from the form fields, including the phone field
-          const formData = {
+
             firstName: document.getElementById('firstName').value,
             lastName: document.getElementById('lastName').value,
             email: document.getElementById('email').value,
             password: document.getElementById('password').value,
             phone: document.getElementById('phone').value, // Added phone field
-          };
 
-          try {
+
+
             const response = await fetch('/patients/register', {
               method: 'POST', // Ensure method is POST
               headers: {
