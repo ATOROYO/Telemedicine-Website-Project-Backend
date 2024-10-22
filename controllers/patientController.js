@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt');
 // Patient Registration
 exports.registerPatient = async (req, res) => {
   try {
+    console.log('Request Body:', req.body); // Log the request body
+
     const { firstName, lastName, email, password, phone } = req.body;
 
     // Add validation logic if necessary
