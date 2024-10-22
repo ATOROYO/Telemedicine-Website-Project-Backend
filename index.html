@@ -92,15 +92,6 @@
       //       });
 
       //       const data = await response.json();
-
-            if (data.success) {
-              feedback.innerHTML = `<span style="color: green">${data.message}</span>`;
-            } else {
-              feedback.innerHTML = `<span style="color: red">${data.message}</span>`;
-            }
-          } catch (error) {
-            feedback.innerHTML = `<span style="color: red">Error: ${error.message}</span>`;
-          }
       //   });
     </script>
 
