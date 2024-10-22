@@ -129,16 +129,16 @@
               body: JSON.stringify(formData),
             });
 
-            const result = await response.json();
-
-            // Handle success or error feedback
+            // Check if the response is valid and has content
             if (response.ok) {
+              const result = await response.json(); // Parse JSON only if it's ok
               document.getElementById('feedbackMessage').innerText =
-                'Registration successful!';
+                result.message;
               document.getElementById('feedbackMessage').style.color = 'green';
               document.getElementById('registerForm').reset(); // Reset the form
             } else {
-              throw new Error(result.message || 'Registration failed');
+              const errorResult = await response.json();
+              throw new Error(errorResult.message || 'Registration failed');
             }
           } catch (error) {
             document.getElementById('feedbackMessage').innerText =
