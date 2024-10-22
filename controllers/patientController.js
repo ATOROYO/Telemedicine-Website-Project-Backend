@@ -8,15 +8,14 @@ exports.registerPatient = async (req, res) => {
     const { firstName, lastName, email, password, phone } = req.body;
 
     // Add validation logic if necessary
-
-    // Assuming you have a function to save the patient to the database
     await savePatientToDatabase(firstName, lastName, email, password, phone);
 
     // Send a proper JSON response
-    res.status(200).json({ message: 'Registration successful' });
+    res.status(200).json({ message: 'Registration successful' }); // Ensure response is valid JSON
   } catch (error) {
     console.error('Error during registration:', error);
-    // Send error response
+
+    // Send error response in JSON
     res
       .status(500)
       .json({ message: 'Registration failed', error: error.message });
