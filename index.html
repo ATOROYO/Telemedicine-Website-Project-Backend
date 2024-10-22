@@ -105,42 +105,40 @@
     </script>
 
     <script>
+      // Assuming you have an HTML form with an ID 'registerForm'
       document
         .getElementById('registerForm')
-        .addEventListener('submit', async function (e) {
-          e.preventDefault(); // Prevent default form submission
+        .addEventListener('submit', async function (event) {
+          event.preventDefault(); // Prevent the form from submitting the traditional way
 
-          const formData = {
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            email: document.getElementById('email').value,
-            password: document.getElementById('password').value,
-            phone: document.getElementById('phone').value,
-          };
+          // Get the form data
+          const firstName = document.getElementById('firstName').value;
+          const lastName = document.getElementById('lastName').value;
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+
+          const formData = { firstName, lastName, email, password };
 
           try {
             const response = await fetch('/patients/register', {
-              method: 'POST',
+              method: 'POST', // Make sure it's POST
               headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json', // We're sending JSON data
               },
-              body: JSON.stringify(formData),
+              body: JSON.stringify(formData), // Convert the form data to JSON string
             });
 
+            // Handle the server response
             if (response.ok) {
               const result = await response.json();
-              document.getElementById('feedbackMessage').innerText =
-                result.message;
-              document.getElementById('feedbackMessage').style.color = 'green';
-              document.getElementById('registerForm').reset();
+              alert('Registration successful!');
+              // Do something like redirect to a login page
             } else {
-              const errorResult = await response.json(); // Check if response has an error message
-              throw new Error(errorResult.message || 'Registration failed');
+              alert('Failed to register. Please try again.');
             }
           } catch (error) {
-            document.getElementById('feedbackMessage').innerText =
-              error.message || 'Unexpected error occurred';
-            document.getElementById('feedbackMessage').style.color = 'red';
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
           }
         });
     </script>
