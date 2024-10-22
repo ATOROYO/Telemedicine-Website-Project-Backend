@@ -125,6 +125,23 @@ exports.getAllPatients = async (req, res) => {
   }
 };
 
+// Save patients into the database
+const savePatientToDatabase = async (
+  firstName,
+  lastName,
+  email,
+  password,
+  phone
+) => {
+  const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+
+  const query =
+    'INSERT INTO patients (first_name, last_name, email, password, phone) VALUES (?, ?, ?, ?, ?)';
+  const values = [firstName, lastName, email, hashedPassword, phone];
+
+  await db.execute(query, values);
+};
+
 // Adding new patient to the database
 exports.addPatient = (req, res) => {
   const { first_name, last_name, email, password } = req.body;
