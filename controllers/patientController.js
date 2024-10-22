@@ -4,22 +4,22 @@ const bcrypt = require('bcrypt');
 
 // Patient Registration
 exports.registerPatient = async (req, res) => {
-  const { firstName, lastName, email, password, phone } = req.body;
-
-  // Hash password
-  const hashedPassword = await bcrypt.hash(password, 10);
-
   try {
-    // Insert the user data into the patients table
-    const [result] = await pool.execute(
-      `INSERT INTO patients (first_name, last_name, email, password, phone) VALUES (?, ?, ?, ?, ?)`,
-      [firstName, lastName, email, hashedPassword, phone]
-    );
+    const { firstName, lastName, email, password, phone } = req.body;
 
-    res.status(201).json({ message: 'User registered successfully!' });
-  } catch (err) {
-    console.error('Error registering patient:', err);
-    res.status(500).json({ message: 'Error registering user', error: err });
+    // Add validation logic if necessary
+
+    // Assuming you have a function to save the patient to the database
+    await savePatientToDatabase(firstName, lastName, email, password, phone);
+
+    // Send a proper JSON response
+    res.status(200).json({ message: 'Registration successful' });
+  } catch (error) {
+    console.error('Error during registration:', error);
+    // Send error response
+    res
+      .status(500)
+      .json({ message: 'Registration failed', error: error.message });
   }
 };
 
