@@ -74,38 +74,58 @@
 
     <script>
       // Assuming you have an HTML form with an ID 'registerForm'
+      // Event listener for the form submission
       document
         .getElementById('registerForm')
         .addEventListener('submit', async function (event) {
-          event.preventDefault(); // Prevent the form from submitting the traditional way
+          // Prevent the default form submission behavior
+          event.preventDefault();
 
-          // Get values from the form fields, including the phone field
+          // Collect user input from the form fields
+          const formData = {
+            firstName: document.getElementById('firstName').value.trim(),
+            lastName: document.getElementById('lastName').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            password: document.getElementById('password').value.trim(),
+            phone: document.getElementById('phone').value.trim(), // Added phone field
+          };
 
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            email: document.getElementById('email').value,
-            password: document.getElementById('password').value,
-            phone: document.getElementById('phone').value, // Added phone field
+          // Validate input data
+          if (
+            !formData.firstName ||
+            !formData.lastName ||
+            !formData.email ||
+            !formData.password ||
+            !formData.phone
+          ) {
+            alert('Please fill in all required fields.');
+            return;
+          }
 
-
-
+          // Send the form data to the server using a POST request
+          try {
             const response = await fetch('/patients/register', {
-              method: 'POST', // Ensure method is POST
+              method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify(formData), // Send form data as JSON
+              body: JSON.stringify(formData),
             });
 
+            // Handle the server response
             if (response.ok) {
+              // Registration was successful
               const result = await response.json();
               alert('Registration successful!');
               console.log(result);
+              // Redirect to a success page or perform other actions
             } else {
+              // Registration failed
               const errorData = await response.json();
               alert(`Failed to register: ${errorData.message}`);
             }
           } catch (error) {
+            // Handle unexpected errors
             console.error('An unexpected error occurred:', error);
             alert('An unexpected error occurred. Please try again.');
           }
