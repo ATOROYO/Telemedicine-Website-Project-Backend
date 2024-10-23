@@ -20,7 +20,7 @@ const adminRoutes = require('./routes/admin');
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors()); // Add CORS for cross-origin requests
