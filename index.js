@@ -22,6 +22,9 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8080;
 
+// Configuration for cors
+app.use(cors());
+
 // This ensures that incoming requests with JSON bodies are parsed
 app.use(express.json());
 app.use(bodyParser.json());
