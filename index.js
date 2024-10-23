@@ -51,7 +51,7 @@ app.get('/patients', ensurePatient, (req, res) => {
   res.sendFile();
 });
 
-// Start the server
+// Start the Server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
