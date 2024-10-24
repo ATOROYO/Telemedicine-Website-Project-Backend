@@ -17,12 +17,10 @@ exports.registerPatient = async (req, res) => {
       [firstName, lastName, email, password, phone]
     );
 
-    return res
-      .status(201)
-      .json({
-        message: 'Patient registered successfully!',
-        patientId: result.insertId,
-      });
+    return res.status(201).json({
+      message: 'Patient registered successfully!',
+      patientId: result.insertId,
+    });
   } catch (error) {
     console.error('Error registering patient:', error);
     return res.status(500).json({ message: 'Failed to register patient.' });
