@@ -1,105 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <form id="registerForm">
-      <div class="form-group">
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" required />
-      </div>
+<form id="registerForm">
+  <input type="text" id="firstName" placeholder="First Name" required />
+  <input type="text" id="lastName" placeholder="Last Name" required />
+  <input type="email" id="email" placeholder="Email" required />
+  <input type="password" id="password" placeholder="Password" required />
+  <input type="text" id="phone" placeholder="Phone" required />
+  <button type="submit">Register</button>
+</form>
 
-      <div class="form-group">
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" required />
-      </div>
+<script>
+  document
+    .getElementById('registerForm')
+    .addEventListener('submit', async function (event) {
+      event.preventDefault(); // Prevent default form submission
 
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required />
-      </div>
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const phone = document.getElementById('phone').value.trim();
 
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-      </div>
+      // Validate input
+      if (!firstName || !lastName || !email || !password || !phone) {
+        alert('Please fill in all fields.');
+        return;
+      }
 
-      <div class="form-group">
-        <label for="phone">Phone Number:</label>
-        <input type="text" id="phone" name="phone" required />
-      </div>
-
-      <button type="submit">Register</button>
-
-      <!-- Area to display success or error messages -->
-      <div id="feedbackMessage"></div>
-    </form>
-
-    <script>
-      // Event listener for the form submission
-      document
-        .getElementById('registerForm')
-        .addEventListener('submit', async function (event) {
-          // Prevent the default form submission behavior
-          event.preventDefault();
-
-          // Collect user input from the form fields
-          const firstName = document.getElementById('firstName').value.trim();
-          const lastName = document.getElementById('lastName').value.trim();
-          const email = document.getElementById('email').value.trim();
-          const password = document.getElementById('password').value.trim();
-          const phone = document.getElementById('phone').value.trim();
-
-          // Validate input data
-          if (!firstName || !lastName || !email || !password || !phone) {
-            alert('Please fill in all required fields.');
-            return;
+      try {
+        // Send POST request to register the user
+        const response = await fetch(
+          'http://127.0.0.1:8080/patients/register',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              firstName,
+              lastName,
+              email,
+              password,
+              phone,
+            }),
           }
+        );
 
-          try {
-            // Send the form data to the server using a POST request
-            const response = await fetch(
-              'http://127.0.0.1:8080/patients/register',
-              {
-                // Ensure full URL
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  firstName,
-                  lastName,
-                  email,
-                  password,
-                  phone,
-                }),
-              }
-            );
-
-            // Check if the request was successful
-            if (response.ok) {
-              const data = await response.json();
-              alert('Registration successful!'); // Feedback to user
-
-              // Clear the form after successful registration
-              document.getElementById('registerForm').reset();
-            } else {
-              // If response status is not OK, handle errors
-              const errorData = await response.json();
-              alert(
-                `Failed to register: ${
-                  errorData.message || 'Unknown error occurred'
-                }`
-              );
-            }
-          } catch (error) {
-            console.error('An unexpected error occurred:', error);
-            alert('An unexpected error occurred. Please try again.');
-          }
-        });
-    </script>
-  </body>
-</html>
+        if (response.ok) {
+          const result = await response.json();
+          alert('Registration successful!');
+          document.getElementById('registerForm').reset(); // Clear the form
+        } else {
+          const errorData = await response.json();
+          alert(`Failed to register: ${errorData.message}`);
+        }
+      } catch (error) {
+        console.error('Error occurred:', error);
+        alert('Failed to register. Please try again.');
+      }
+    });
+</script>
