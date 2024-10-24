@@ -3,7 +3,7 @@ const db = require('../config/db');
 const bcrypt = require('bcryptjs');
 
 // Patient Registration
-exports.registerUser = async (req, res) => {
+exports.registerPatient = async (req, res) => {
   const { firstName, lastName, email, password, phone } = req.body;
   try {
     // check if the user exists in the database - use email address
