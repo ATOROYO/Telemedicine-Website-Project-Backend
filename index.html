@@ -55,43 +55,27 @@
           const phone = document.getElementById('phone').value.trim();
 
           // Validate input data
-          if (
-            !firstName ||
-            !lastName ||
-            !email ||
-            !password ||
-            !phone
-          ) {
+          if (!firstName || !lastName || !email || !password || !phone) {
             alert('Please fill in all required fields.');
             return;
           }
 
           // Send the form data to the server using a POST request
-            const response = await fetch('/patients/register', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({firstName, lastName, email, password, phone}),
-            });
+          const response = await fetch('/patients/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              firstName,
+              lastName,
+              email,
+              password,
+              phone,
+            }),
+          });
 
-            // Handle the server response
-            if (response.ok) {
-              // Registration was successful
-              const result = await response.json();
-              alert('Registration successful!');
-              console.log(result);
-              // Redirect to a success page or perform other actions
-            } else {
-              // Registration failed
-              const errorData = await response.json();
-              alert(`Failed to register: ${errorData.message}`);
-            }
-          } catch (error) {
-            // Handle unexpected errors
-            console.error('An unexpected error occurred:', error);
-            alert('An unexpected error occurred. Please try again.');
-          }
+          // Handle the server response
         });
     </script>
   </body>
