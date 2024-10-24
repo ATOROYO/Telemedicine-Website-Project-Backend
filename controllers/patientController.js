@@ -1,6 +1,6 @@
 // Importing modules
 const db = require('../config/db');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // Patient Registration
 exports.registerPatient = async (req, res) => {
