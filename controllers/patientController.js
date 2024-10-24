@@ -3,29 +3,27 @@ const db = require('../config/db');
 const bcrypt = require('bcryptjs');
 
 // Patient Registration
-exports.registerPatient = async (req, res) => {
+exports.registerUser = async (req, res) => {
   const { firstName, lastName, email, password, phone } = req.body;
-
-  if (!firstName || !lastName || !email || !password || !phone) {
-    return res.status(400).json({ message: 'All fields are required.' });
-  }
-
   try {
-    const [result] = await db.query(
-      'INSERT INTO patients (first_name, last_name, email, password, phone) VALUES (?, ?, ?, ?, ?)',
-      [firstName, lastName, email, password, phone]
+    // check if the user exists in the database - use email address
+    const [rows] = await db.execute('SELECT * FROM patients WHERE email = ?', [
+      email,
+    ]);
+    if (rows.length > 0) {
+      return res.status(400).json({ message: 'User already exists.' });
+    }
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    // Insert the record to db
+    await db.execute(
+      'INSERT INTO patients (first_name, last_name, email, password, phone) VALUES (?,?,?,?,?)',
+      [firstName, lastName, email, hashedPassword, phone]
     );
 
-    // Return a JSON response
-    return res.status(201).json({
-      message: 'Patient registered successfully!',
-      patientId: result.insertId,
-    });
+    res.status(201).json({ message: 'User registered successfully!' });
   } catch (error) {
-    console.error('Error registering patient:', error);
-
-    // Return an error JSON response
-    return res.status(500).json({ message: 'Failed to register patient.' });
+    res.status(500).json({ message: 'An error occurred.', error });
   }
 };
 
