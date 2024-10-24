@@ -22,7 +22,9 @@ router.post('/add', patientController.addPatient);
 router.get('/:id', patientController.getPatientById);
 
 // Registration Route
-router.post('/register', patientController);
+router.post('/register', (req, res) => {
+  patientController;
+});
 
 // Login route
 router.post('/login', patientController.loginPatient);
