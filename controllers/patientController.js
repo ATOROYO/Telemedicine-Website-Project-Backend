@@ -4,25 +4,41 @@ const bcrypt = require('bcrypt');
 
 // Patient Registration
 exports.registerPatient = async (req, res) => {
+  const { firstName, lastName, email, password, phone } = req.body;
+
+  if (!firstName || !lastName || !email || !password || !phone) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+
   try {
-    console.log('Request Body:', req.body); // Log the request body
+    // Insert the new patient into the database
+    const [result] = await db.query(
+      'INSERT INTO patients (first_name, last_name, email, password, phone) VALUES (?, ?, ?, ?, ?)',
+      [firstName, lastName, email, password, phone]
+    );
 
-    const { firstName, lastName, email, password, phone } = req.body;
-
-    // Add validation logic if necessary
-    await savePatientToDatabase(firstName, lastName, email, password, phone);
-
-    // Send a proper JSON response
-    res.status(200).json({ message: 'Registration successful' }); // Ensure response is valid JSON
+    return res
+      .status(201)
+      .json({
+        message: 'Patient registered successfully!',
+        patientId: result.insertId,
+      });
   } catch (error) {
-    console.error('Error during registration:', error);
-
-    // Send error response in JSON
-    res
-      .status(500)
-      .json({ message: 'Registration failed', error: error.message });
+    console.error('Error registering patient:', error);
+    return res.status(500).json({ message: 'Failed to register patient.' });
   }
 };
+
+// Fetch all patients (for admin purposes)
+// exports.getAllPatients = async (req, res) => {
+//   try {
+//     const [patients] = await db.query('SELECT * FROM patients');
+//     res.status(200).json(patients);
+//   } catch (error) {
+//     console.error('Error fetching patients:', error);
+//     res.status(500).json({ message: 'Failed to fetch patients.' });
+//   }
+// };
 
 // Patient Login
 exports.loginPatient = async (req, res) => {
