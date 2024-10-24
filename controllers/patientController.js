@@ -17,12 +17,10 @@ exports.registerPatient = async (req, res) => {
     );
 
     // Return a JSON response
-    return res
-      .status(201)
-      .json({
-        message: 'Patient registered successfully!',
-        patientId: result.insertId,
-      });
+    return res.status(201).json({
+      message: 'Patient registered successfully!',
+      patientId: result.insertId,
+    });
   } catch (error) {
     console.error('Error registering patient:', error);
 
@@ -30,17 +28,6 @@ exports.registerPatient = async (req, res) => {
     return res.status(500).json({ message: 'Failed to register patient.' });
   }
 };
-
-// Fetch all patients (for admin purposes)
-// exports.getAllPatients = async (req, res) => {
-//   try {
-//     const [patients] = await db.query('SELECT * FROM patients');
-//     res.status(200).json(patients);
-//   } catch (error) {
-//     console.error('Error fetching patients:', error);
-//     res.status(500).json({ message: 'Failed to fetch patients.' });
-//   }
-// };
 
 // Patient Login
 exports.loginPatient = async (req, res) => {
