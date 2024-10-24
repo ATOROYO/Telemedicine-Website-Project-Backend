@@ -11,18 +11,22 @@ exports.registerPatient = async (req, res) => {
   }
 
   try {
-    // Insert the new patient into the database
     const [result] = await db.query(
       'INSERT INTO patients (first_name, last_name, email, password, phone) VALUES (?, ?, ?, ?, ?)',
       [firstName, lastName, email, password, phone]
     );
 
-    return res.status(201).json({
-      message: 'Patient registered successfully!',
-      patientId: result.insertId,
-    });
+    // Return a JSON response
+    return res
+      .status(201)
+      .json({
+        message: 'Patient registered successfully!',
+        patientId: result.insertId,
+      });
   } catch (error) {
     console.error('Error registering patient:', error);
+
+    // Return an error JSON response
     return res.status(500).json({ message: 'Failed to register patient.' });
   }
 };
