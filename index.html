@@ -56,18 +56,17 @@
 
           // Validate input data
           if (
-            !formData.firstName ||
-            !formData.lastName ||
-            !formData.email ||
-            !formData.password ||
-            !formData.phone
+            !firstName ||
+            !lastName ||
+            !email ||
+            !password ||
+            !phone
           ) {
             alert('Please fill in all required fields.');
             return;
           }
 
           // Send the form data to the server using a POST request
-          try {
             const response = await fetch('/patients/register', {
               method: 'POST',
               headers: {
