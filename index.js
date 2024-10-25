@@ -71,7 +71,6 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 // Middleware
-app.use(cors()); // Enable CORS
 app.use(bodyParser.json()); // Parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
