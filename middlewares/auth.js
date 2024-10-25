@@ -30,28 +30,29 @@
 
 // module.exports = { ensureAdmin };
 
+///////////////////////////
 // Ensure the user is authenticated
-function ensureAuthenticated(req, res, next) {
-  if (req.session && req.session.user) {
-    return next();
-  }
-  return res.status(401).json({ message: 'Unauthorized' });
-}
+// function ensureAuthenticated(req, res, next) {
+//   if (req.session && req.session.user) {
+//     return next();
+//   }
+//   return res.status(401).json({ message: 'Unauthorized' });
+// }
 
-// Ensure the user is an admin
-function ensureAdmin(req, res, next) {
-  if (req.session.user && req.session.user.role === 'admin') {
-    return next();
-  }
-  return res.status(403).json({ message: 'Forbidden: Admins only' });
-}
+// // Ensure the user is an admin
+// function ensureAdmin(req, res, next) {
+//   if (req.session.user && req.session.user.role === 'admin') {
+//     return next();
+//   }
+//   return res.status(403).json({ message: 'Forbidden: Admins only' });
+// }
 
-// Ensure the user is a patient
-function ensurePatient(req, res, next) {
-  if (req.session.user && req.session.user.role === 'patient') {
-    return next();
-  }
-  return res.status(403).json({ message: 'Forbidden: Patients only' });
-}
+// // Ensure the user is a patient
+// function ensurePatient(req, res, next) {
+//   if (req.session.user && req.session.user.role === 'patient') {
+//     return next();
+//   }
+//   return res.status(403).json({ message: 'Forbidden: Patients only' });
+// }
 
-module.exports = { ensureAuthenticated, ensureAdmin, ensurePatient };
+// module.exports = { ensureAuthenticated, ensureAdmin, ensurePatient };
