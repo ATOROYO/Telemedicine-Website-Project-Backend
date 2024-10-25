@@ -72,7 +72,6 @@ const port = process.env.PORT || 8080;
 
 // Middleware
 app.use(bodyParser.json()); // Parse JSON bodies
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 // Routes
 app.use('/patients', patientRoutes); // Use patient routes
