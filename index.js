@@ -88,7 +88,6 @@ app.get('/', (req, res) => {
 });
 app.use('/patients', patientRoutes); // Use patient routes
 
-// Error handling middleware (optional)
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something went wrong!');
