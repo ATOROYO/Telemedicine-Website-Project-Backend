@@ -72,7 +72,15 @@ const app = express();
 // Middleware
 app.use(express.json()); // Parse JSON bodies
 
-//
+// Setup session
+app.use(
+  session({
+    key: 'patient_id',
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 // Routes
 app.use('/patients', patientRoutes); // Use patient routes
