@@ -68,10 +68,11 @@ const patientRoutes = require('./routes/patients');
 
 // Initialize the server
 const app = express();
-const port = process.env.PORT || 8080;
 
 // Middleware
 app.use(express.json()); // Parse JSON bodies
+
+//
 
 // Routes
 app.use('/patients', patientRoutes); // Use patient routes
