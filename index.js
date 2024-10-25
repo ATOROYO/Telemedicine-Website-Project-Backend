@@ -66,6 +66,7 @@ require('dotenv').config();
 // Import patient routes
 const patientRoutes = require('./routes/patients');
 
+// Initialize the server
 const app = express();
 const port = process.env.PORT || 8080;
 
