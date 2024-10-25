@@ -58,7 +58,6 @@
 
 // app.js
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const patientRoutes = require('./routes/patients'); // Import patient routes
 
