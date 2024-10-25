@@ -61,6 +61,7 @@ const express = require('express');
 const session = require('express-session');
 const MySQLStore = require('connect-mysql2')(session);
 const path = require('path');
+require('dotenv').config();
 
 const patientRoutes = require('./routes/patients'); // Import patient routes
 
