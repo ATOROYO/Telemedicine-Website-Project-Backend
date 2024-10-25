@@ -59,7 +59,7 @@
 // app.js
 const express = require('express');
 const session = require('express-session');
-const MySQLStore = require('connect-mysql2');
+const MySQLStore = require('connect-mysql2')(session);
 const patientRoutes = require('./routes/patients'); // Import patient routes
 
 const app = express();
