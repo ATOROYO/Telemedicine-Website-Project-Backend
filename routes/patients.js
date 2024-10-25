@@ -1,8 +1,8 @@
 // Importing modules
 const express = require('express');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const router = express.Router();
-const db = require('../config/db'); // Import the promise-based MySQL pool
+const db = require('../config/db');
 const patientController = require('../controllers/patientController');
 const {
   ensureAuthenticated,
