@@ -83,6 +83,9 @@ app.use(
 );
 
 // Routes
+app.get('/', (req, res) => {
+  res.sendFile();
+});
 app.use('/patients', patientRoutes); // Use patient routes
 
 // Error handling middleware (optional)
