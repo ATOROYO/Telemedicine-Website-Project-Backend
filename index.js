@@ -63,7 +63,8 @@ const MySQLStore = require('connect-mysql2')(session);
 const path = require('path');
 require('dotenv').config();
 
-const patientRoutes = require('./routes/patients'); // Import patient routes
+// Import patient routes
+const patientRoutes = require('./routes/patients');
 
 const app = express();
 const port = process.env.PORT || 8080;
