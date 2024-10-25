@@ -58,6 +58,7 @@
 
 // app.js
 const express = require('express');
+const session = require('express-session');
 const patientRoutes = require('./routes/patients'); // Import patient routes
 
 const app = express();
