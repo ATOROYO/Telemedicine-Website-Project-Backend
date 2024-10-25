@@ -89,6 +89,8 @@ app.get('/', (req, res) => {
 app.use('/patients', patientRoutes); // Use patient routes
 
 // Start the server
+const port = process.env.PORT;
+
 app.listen(port, () => {
   console.log(`Server running on http://127.0.0.1:${port}`);
 });
