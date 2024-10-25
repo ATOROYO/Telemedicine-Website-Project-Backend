@@ -88,11 +88,6 @@ app.get('/', (req, res) => {
 });
 app.use('/patients', patientRoutes); // Use patient routes
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something went wrong!');
-});
-
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on http://127.0.0.1:${port}`);
