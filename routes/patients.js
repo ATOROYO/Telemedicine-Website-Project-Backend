@@ -16,7 +16,9 @@ router.get('/profile', (req, res) => {
 });
 
 // Update profile
-router.put('/profile', ensureAuthenticated, patientController.updateProfile);
+router.put('/profile', (req, res) => {
+  ensureAuthenticated, patientController.updateProfile;
+});
 
 // Patient Routes
 router.get('/', patientController.getAllPatients);
