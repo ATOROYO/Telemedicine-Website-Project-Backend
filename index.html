@@ -23,9 +23,7 @@
       if (!firstName || !lastName || !email || !password || !phone) {
         alert('Please fill in all fields.');
         return;
-      }
 
-      try {
         // Send POST request to register the user
         const response = await fetch('patients/register', {
           method: 'POST',
@@ -54,9 +52,6 @@
           const errorData = await response.json();
           alert(`Failed to register: ${errorData.message}`);
         }
-      } catch (error) {
-        console.error('Error occurred:', error);
-        alert('Failed to register. Please try again.');
       }
     });
 </script>
