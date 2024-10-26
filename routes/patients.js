@@ -34,6 +34,8 @@ router.post('/register', (req, res) => {
 router.post('/login', patientController.loginPatient);
 
 // Logout route
-router.post('/logout', ensureAuthenticated, patientController.logout);
+router.post('/logout', (req, res) => {
+  ensureAuthenticated, patientController.logout;
+});
 
 module.exports = router;
