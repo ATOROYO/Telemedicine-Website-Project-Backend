@@ -40,7 +40,7 @@
         });
 
         // Check if the response body has valid JSON content
-        const result = await response.json().catch(() => null);
+        const result = await response.json();
         if (result) {
           alert('Registration successful!');
           document.getElementById('registerForm').reset(); // Clear the form
