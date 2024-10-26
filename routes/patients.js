@@ -11,7 +11,9 @@ const {
 } = require('../middlewares/auth');
 
 // View profile
-router.get('/profile', ensureAuthenticated, patientController.viewProfile);
+router.get('/profile', (req, res) => {
+  ensureAuthenticated, patientController.viewProfile;
+});
 
 // Update profile
 router.put('/profile', ensureAuthenticated, patientController.updateProfile);
